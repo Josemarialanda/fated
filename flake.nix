@@ -44,10 +44,10 @@
           ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
           ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
           JAVA_HOME = jdk.home;
-          # FLUTTER_ROOT = flutter;
-          # DART_ROOT = "${flutter}/bin/cache/dart-sdk";
-          # GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/33.0.2/aapt2";
-          # QT_QPA_PLATFORM = "wayland;xcb"; # emulator related: try using wayland, otherwise fall back to X.
+          FLUTTER_ROOT = flutter;
+          DART_ROOT = "${flutter}/bin/cache/dart-sdk";
+          GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidSdk}/libexec/android-sdk/build-tools/33.0.2/aapt2";
+          QT_QPA_PLATFORM = "wayland;xcb"; # emulator related: try using wayland, otherwise fall back to X.
           # NB: due to the emulator's bundled qt version, it currently does not start with QT_QPA_PLATFORM="wayland".
           # Maybe one day this will be supported.
           buildInputs = [
@@ -58,16 +58,16 @@
             jdk
           ];
           # emulator related: vulkan-loader and libGL shared libs are necessary for hardware decoding
-          # LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath [vulkan-loader libGL]}";
+          LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath [vulkan-loader libGL]}";
           # Globally installed packages, which are installed through `dart pub global activate package_name`,
           # are located in the `$PUB_CACHE/bin` directory.
-          # shellHook = ''
-          #   if [ -z "$PUB_CACHE" ]; then
-          #     export PATH="$PATH:$HOME/.pub-cache/bin"
-          #   else
-          #     export PATH="$PATH:$PUB_CACHE/bin"
-          #   fi
-          # '';
+          shellHook = ''
+            if [ -z "$PUB_CACHE" ]; then
+              export PATH="$PATH:$HOME/.pub-cache/bin"
+            else
+              export PATH="$PATH:$PUB_CACHE/bin"
+            fi
+          '';
         };
       }
     );
